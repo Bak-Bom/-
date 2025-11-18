@@ -123,6 +123,16 @@ pre:hover { animation: glow 1.5s infinite; }
 }
 
 @media(max-width:768px){ header h1{font-size:1.6rem;} .hero h2{font-size:2rem;} .box{padding:1.5rem;} }
+.cursor {
+  display: inline-block;
+  font-weight: bold;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
 
 </style>
 </head>
@@ -142,7 +152,6 @@ pre:hover { animation: glow 1.5s infinite; }
 
 <section id="script" class="hero animate__animated animate__fadeIn">
   <h2 id="typedHero"></h2>
-  <p>พัฒนาโดย BomDev</p>
 </section>
 
 <div id="luaSection" class="box animate__animated animate__fadeInUp">
@@ -198,18 +207,38 @@ function animateParticles(){
 animateParticles();
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
 
-const heroText = "แจกโค้ด Lua โปร SAMP ";
-let index = 0;
+const heroText1 = "แจกโค้ด Lua โปร SAMP ";
+const heroText2 = "พัฒนาโดย BomDev";
+let heroIndex1 = 0;
+let heroIndex2 = 0;
 const typedHero = document.getElementById("typedHero");
-function typeHero() {
-  if(index < heroText.length){
-    typedHero.innerHTML += heroText[index];
-    index++;
-    setTimeout(typeHero, 80);
+
+const cursor = '<span class="cursor">|</span>';
+
+function typeHero1() {
+  if (heroIndex1 <= heroText1.length) {
+    typedHero.innerHTML = heroText1.slice(0, heroIndex1) + cursor;
+    heroIndex1++;
+    setTimeout(typeHero1, 80);
+  } else {
+    setTimeout(typeHero2, 500); 
   }
 }
-typeHero();
 
+function typeHero2() {
+  if (heroIndex2 <= heroText2.length) {
+    typedHero.innerHTML = heroText1 + heroText2.slice(0, heroIndex2) + cursor;
+    heroIndex2++;
+    setTimeout(typeHero2, 80);
+  } else {
+    typedHero.innerHTML = heroText1 + heroText2 + cursor;
+  }
+}
+
+window.addEventListener('load', typeHero1);
+
+let luaIndex = 0;
+const luaCodeEl = document.getElementById("luaCode");
 const luaContent = `script_name("BOMDev_VehicleGod")
 script_author("BOMDev")
 
@@ -250,15 +279,19 @@ function toggleCarGod()
     end
 end`;
 
-let luaIndex = 0;
-const luaCodeEl = document.getElementById("luaCode");
+const cursorHTML = '<span class="cursor">|</span>';
+
 function typeLua(){
-  if(luaIndex < luaContent.length){
-    luaCodeEl.innerHTML += luaContent[luaIndex];
+  if(luaIndex <= luaContent.length){
+    luaCodeEl.innerHTML = luaContent.slice(0, luaIndex) + cursorHTML;
     luaIndex++;
     setTimeout(typeLua, 15);
+  } else {
+    const cursor = luaCodeEl.querySelector(".cursor");
+    if(cursor) cursor.style.animation = "blink 0.7s infinite";
   }
 }
+
 typeLua();
 
 function downloadLua(){
