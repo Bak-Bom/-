@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BomDev | Lua Script Hub</title>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"/>
+
+<link href="https://fonts.googleapis.com/css?family=Kanit&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+<style>
+* { box-sizing: border-box; margin:0; padding:0; font-family: 'Kanit', sans-serif; }
+body {
+  background: #0a0a0a;
+  overflow-x: hidden;
+  perspective: 1200px;
+  height: 100%;
+  color: #00ffbf;
+  scroll-behavior: smooth;
+}
+
+#particles {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index:-1;
+  background: radial-gradient(circle at center, #001f26 0%, #000000 100%);
+  overflow: hidden;
+}
+
+header {
+  position: sticky; top:0; left:0; right:0;
+  display:flex; justify-content:space-between; align-items:center;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(15px);
+  padding: 1rem 2rem; z-index: 1000; border-bottom: 1px solid #00ffbf44;
+  transform-style: preserve-3d;
+}
+header h1 {
+  font-size:2rem;
+  color:#00ffbf;
+  text-shadow: 0 0 15px #00ffbf, 0 0 35px #00ffbf55;
+}
+nav a { margin-left:1.5rem; color:#aaffff; font-weight:600; transition:0.3s; }
+nav a:hover {
+  color:#00ffbf;
+  text-shadow:0 0 15px #00ffbf, 0 0 30px #00ffbf;
+  transform: translateY(-2px) scale(1.05);
+}
+
+.hero {
+  text-align:center; padding:6rem 1rem 4rem;
+  transform-style: preserve-3d; 
+  animation: floatHero 5s ease-in-out infinite alternate;
+}
+.hero h2 {
+  font-size:3rem;
+  text-shadow:0 0 20px #00ffbf, 0 0 50px #00ffbf77;
+  font-weight:900;
+}
+.hero p {
+  font-size:1.2rem; color:#a0fff0; margin-top:1rem;
+  opacity:.9;
+  text-shadow:0 0 15px #00ffbf33;
+}
+
+.box {
+  max-width:900px; margin:3rem auto;
+  background: rgba(0,0,0,0.6);
+  padding:2rem; border-radius:20px; border:1px solid #00ffbf33;
+  box-shadow: 0 0 50px #00ffbf44;
+  backdrop-filter: blur(20px);
+  transform-style: preserve-3d;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.box:hover {
+  transform: translateY(-10px) rotateX(2deg) rotateY(2deg);
+  box-shadow: 0 0 80px #00ffbf66, 0 0 120px #00ffbf33 inset;
+}
+.box h3 {
+  text-align:center;
+  color:#00ffbf; font-size:2rem; margin-bottom:1rem;
+  text-shadow:0 0 25px #00ffbf, 0 0 50px #00ffbf66;
+}
+pre {
+  background: rgba(0,0,0,0.85); padding:1.5rem; border-radius:12px;
+  overflow-x:auto; font-size:1rem; color:#9affeb;
+  border:1px solid #00ffbf44; box-shadow: inset 0 0 40px #00ffbf11;
+  min-height: 300px; font-family: 'Courier New', monospace;
+  transition: transform 0.3s;
+}
+pre:hover { transform: scale(1.02) rotateX(1deg) rotateY(1deg); }
+
+.btn-download {
+  display:block; width:100%; padding:1rem; border:none; border-radius:12px;
+  background:#00ffbf; color:#00150f; font-weight:800; font-size:1.3rem; cursor:pointer;
+  box-shadow: 0 0 35px #00ffbf, 0 0 60px #00ffbf77 inset;
+  margin-top:1rem; transition:.3s;
+}
+.btn-download:hover { background:#0fdca1; box-shadow:0 0 60px #00ffbf, 0 0 100px #00ffbf77 inset; transform:scale(1.05) rotateZ(1deg); }
+
+#discordIcon {
+  font-size:3rem; cursor:pointer; color:#7289da; transition:0.3s;
+}
+#discordIcon:hover {
+  color:#00ffbf; text-shadow:0 0 15px #00ffbf,0 0 30px #00ffbf; transform:scale(1.3) rotateZ(10deg);
+}
+
+footer { text-align:center; padding:1.5rem; color:#00ffbf; margin-top:4rem;
+border-top:1px solid #00ffbf33; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
+
+@keyframes glow { 0% { box-shadow:0 0 5px #00ffbf; } 50% { box-shadow:0 0 35px #00ffbf; } 100%{ box-shadow:0 0 5px #00ffbf; } }
+pre:hover { animation: glow 1.5s infinite; }
+
+@keyframes floatHero {
+  0% { transform: translateZ(0px) rotateX(0deg) rotateY(0deg); }
+  50% { transform: translateZ(25px) rotateX(7deg) rotateY(7deg); }
+  100% { transform: translateZ(0px) rotateX(0deg) rotateY(0deg); }
+}
+
+@media(max-width:768px){ header h1{font-size:1.6rem;} .hero h2{font-size:2rem;} .box{padding:1.5rem;} }
+
+</style>
+</head>
+
+<body>
+
+<div id="particles"></div>
+
+<header>
+  <h1>BOMDev</h1>
+  <nav>
+    <a href="#script">Script</a>
+    <a href="#howto">How to</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section id="script" class="hero animate__animated animate__fadeIn">
+  <h2 id="typedHero"></h2>
+  <p>พัฒนาโดย BomDev</p>
+</section>
+
+<div id="luaSection" class="box animate__animated animate__fadeInUp">
+  <h3><i class="fa-solid fa-code"></i> โค้ด Lua</h3>
+  <pre id="luaCode"></pre>
+  <button class="btn-download" onclick="downloadLua()"><i class="fa-solid fa-download"></i> ดาวน์โหลดไฟล์ .lua</button>
+</div>
+
+<div id="howto" class="box animate__animated animate__fadeInUp">
+  <h3><i class="fa-solid fa-circle-info"></i> วิธีใช้</h3>
+  <p>1. โหลดไฟล์ .lua <br> 2. ใส่ลงใน monetloader <br> 3. ใช้คำสั่ง /vfix เพื่อเปิด/ปิด โปร</p>
+</div>
+
+<div id="contact" class="box animate__animated animate__fadeInUp">
+  <h3><i class="fa-brands fa-discord"></i> ติดต่อเรา</h3>
+  <p style="text-align:center;">
+    <i id="discordIcon" class="fa-brands fa-discord"></i>
+  </p>
+</div>
+
+<footer>© 2025 BOMDev — สงวนสิทธิ์ทั้งหมด</footer>
+
+<script>
+const canvas = document.createElement('canvas');
+document.getElementById('particles').appendChild(canvas);
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const ctx = canvas.getContext('2d');
+let particles = [];
+for(let i=0;i<120;i++){
+  particles.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    r:Math.random()*2+1,
+    dx:(Math.random()-0.5)*1.5,
+    dy:(Math.random()-0.5)*1.5,
+    color:`hsl(${Math.random()*360}, 100%, 50%)`
+  });
+}
+function animateParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let p of particles){
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=p.color;
+    ctx.fill();
+    p.x+=p.dx; p.y+=p.dy;
+    if(p.x>canvas.width)p.x=0; if(p.x<0)p.x=canvas.width;
+    if(p.y>canvas.height)p.y=0; if(p.y<0)p.y=canvas.height;
+  }
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
+
+const heroText = "แจกโค้ด Lua โปร SAMP ";
+let index = 0;
+const typedHero = document.getElementById("typedHero");
+function typeHero() {
+  if(index < heroText.length){
+    typedHero.innerHTML += heroText[index];
+    index++;
+    setTimeout(typeHero, 80);
+  }
+}
+typeHero();
+
+const luaContent = `script_name("BOMDev_VehicleGod")
+script_author("BOMDev")
+
+local enable = false
+
+function main()
+    repeat wait(0) until isSampAvailable()
+    wait(2000)
+    sampRegisterChatCommand("vfix", toggleCarGod)
+    sampAddChatMessage("{00FF00}[BOMDev]{FFFFFF} พิมพ์ /vfix เพื่อเปิด/ปิด รถไม่พัง", -1)
+
+    while true do
+        wait(0)
+        if enable then
+            if isCharInAnyCar(PLAYER_PED) then
+                local car = storeCarCharIsInNoSave(PLAYER_PED)
+                if doesVehicleExist(car) then
+                    setCarCanBeDamaged(car, false)
+                    fixCar(car)
+                end
+            end
+        end
+    end
+end
+
+function toggleCarGod()
+    enable = not enable
+    if enable then
+        sampAddChatMessage("{00FF00}[BOMDev]{FFFFFF} โหมดรถไม่พัง: เปิด", -1)
+    else
+        if isCharInAnyCar(PLAYER_PED) then
+            local car = storeCarCharIsInNoSave(PLAYER_PED)
+            if doesVehicleExist(car) then
+                setCarCanBeDamaged(car, true)
+            end
+        end
+        sampAddChatMessage("{FF0000}[BOMDev]{FFFFFF} โหมดรถไม่พัง: ปิด", -1)
+    end
+end`;
+
+let luaIndex = 0;
+const luaCodeEl = document.getElementById("luaCode");
+function typeLua(){
+  if(luaIndex < luaContent.length){
+    luaCodeEl.innerHTML += luaContent[luaIndex];
+    luaIndex++;
+    setTimeout(typeLua, 15);
+  }
+}
+typeLua();
+
+function downloadLua(){
+  const code=document.getElementById("luaCode").innerText;
+  const file=new Blob([code],{type:"text/plain"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(file);
+  a.download="BOMDev_VehicleGod.lua";
+  a.click();
+  Swal.fire({
+    icon:"success",
+    title:"ดาวน์โหลดสำเร็จ!",
+    text:"ไฟล์ .lua ถูกบันทึกแล้ว",
+    confirmButtonColor:"#00ffbf",
+    background:"#0a0a0a",
+    color:"#00ffbf"
+  });
+}
+
+const discordIcon = document.getElementById("discordIcon");
+discordIcon.addEventListener("click", () => {
+  Swal.fire({
+    title: 'เข้าร่วม Discord ของเรา?',
+    text: 'คลิกที่ปุ่มด้านล่างเพื่อเข้าร่วมเซิร์ฟเวอร์!',
+    icon: 'info',
+    showCancelButton: true,
+    confirmButtonText: 'เข้าร่วม Discord',
+    cancelButtonText: 'ยกเลิก',
+    confirmButtonColor: '#7289da',
+    background: '#0a0a0a',
+    color: '#00ffbf',
+  }).then((result) => {
+    if(result.isConfirmed){
+      window.open("https://discord.gg/YOUR_DISCORD_LINK", "_blank");
+    }
+  });
+});
+const boxes = document.querySelectorAll('.box');
+document.addEventListener('mousemove', e=>{
+  const x = (e.clientX/window.innerWidth - 0.5)*20;
+  const y = (e.clientY/window.innerHeight - 0.5)*20;
+  boxes.forEach(box=>{
+    box.style.transform=`rotateY(${x}deg) rotateX(${-y}deg) translateZ(10px)`;
+  });
+});
+</script>
+
+</body>
+</html>
