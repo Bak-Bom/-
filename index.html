@@ -297,26 +297,22 @@ typeLua();
 function downloadLua(){
   if(luaIndex < luaContent.length){
     Swal.fire({
-      toast: true,
-      position: 'top-end',
       icon: 'info',
-      title: 'โค้ดยังพิมพ์ไม่เสร็จ กรุณารอให้ระบบเขียนโค้ดเสร็จก่อนดาวน์โหลด',
-      showConfirmButton: false,
-      timer: 2000,
-      timerProgressBar: true,
-      background: '#0a0a0a',
-      color: '#00ffbf'
+      title: 'รอสักครู่...',
+      text: 'โค้ดยังพิมพ์ไม่เสร็จ กรุณารอให้ระบบเขียนโค้ดเสร็จก่อนดาวน์โหลด',
+      confirmButtonColor:"#00ffbf",
+      background:"#0a0a0a",
+      color:"#00ffbf"
     });
     return; 
   }
 
-  const code = document.getElementById("luaCode").innerText;
-  const file = new Blob([code], { type: "text/plain" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(file);
-  a.download = "BOMDev_VehicleGod.lua";
+  const code=document.getElementById("luaCode").innerText;
+  const file=new Blob([code],{type:"text/plain"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(file);
+  a.download="BOMDev_VehicleGod.lua";
   a.click();
-
   Swal.fire({
     icon:"success",
     title:"ดาวน์โหลดสำเร็จ!",
