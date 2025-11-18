@@ -207,7 +207,7 @@ function animateParticles(){
 animateParticles();
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
 
-const heroText1 = "แจกโค้ด Lua โปร SAMP ";
+const heroText1 = "แจกโค้ด Lua โปร SAMP";
 const heroText2 = "พัฒนาโดย BomDev";
 let heroIndex1 = 0;
 let heroIndex2 = 0;
@@ -221,17 +221,19 @@ function typeHero1() {
     heroIndex1++;
     setTimeout(typeHero1, 80);
   } else {
+
     setTimeout(typeHero2, 500); 
   }
 }
 
 function typeHero2() {
   if (heroIndex2 <= heroText2.length) {
-    typedHero.innerHTML = heroText1 + heroText2.slice(0, heroIndex2) + cursor;
+่
+    typedHero.innerHTML = heroText1 + "<br>" + heroText2.slice(0, heroIndex2) + cursor;
     heroIndex2++;
     setTimeout(typeHero2, 80);
   } else {
-    typedHero.innerHTML = heroText1 + heroText2 + cursor;
+    typedHero.innerHTML = heroText1 + "<br>" + heroText2 + cursor;
   }
 }
 
